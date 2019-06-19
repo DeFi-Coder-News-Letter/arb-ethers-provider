@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/OffchainLabs/arb-ethers-provider.svg?branch=master)](https://travis-ci.com/OffchainLabs/arb-ethers-provider) [![codecov](https://codecov.io/gh/OffchainLabs/arb-ethers-provider/branch/master/graph/badge.svg)](https://codecov.io/gh/OffchainLabs/arb-ethers-provider)
 # arb-ethers-provider
 
 Arbitrum browser provider for ethers
