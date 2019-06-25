@@ -18,6 +18,7 @@
 const ethers = require("ethers");
 const utils = ethers.utils;
 const arb = require("../lib/arb-value");
+const test_cases = require("./test_cases.json");
 
 // Helper shortcuts
 const bn = (n) => utils.bigNumberify(n);
@@ -368,5 +369,16 @@ describe("Integration", function() {
     const messageReverse2 = arb.marshal(valReverse2);
     expect(messageReverse2).toBe(expectedMessageBytes);
   });
+});
+
+describe("test_cases.json", function() {
+  for (let i = 0; i < test_cases.length; i++) {
+    it(test_cases[i]["name"], function() {
+      let expectedHash = test_cases[i]["hash"];
+      let value = arb.unmarshal(test_cases[i]["value"]);
+      let hash = value.hash().slice(2);
+      expect(hash).toEqual(expectedHash);
+    });
+  }
 });
 
