@@ -110,6 +110,8 @@ describe("Constructors", function() {
     let invalid = new arb.CodePointValue(0, new arb.Operation(0x0), nullHash);
     expect(() => invalid.hash())
       .toThrow("CodePointValue must be instanceof BasicOp or ImmOp");
+    expect(() => invalid.toString())
+      .toThrow("CodePointValue must be instanceof BasicOp or ImmOp");
   });
 
   test("HashOnlyValue", function() {
@@ -229,6 +231,7 @@ describe("Marshaling", function() {
     expect(revValue.insnNum).toEqual(pc);
     expect(revValue.op.opcode).toBe(op.opcode);
     expect(revValue.nextHash).toEqual(nextHash);
+    expect(revValue.toString()).toEqual(basic_tcv.toString());
 
     let iv = new arb.IntValue(bn(60));
     expect(arb.marshal(iv).slice(2).length).toBe(M_INT_VALUE_SIZE);
@@ -240,6 +243,7 @@ describe("Marshaling", function() {
     expect(revImmValue.op.opcode).toBe(0x19);
     expect(revImmValue.op.val.bignum.toNumber()).toBe(60);
     expect(revImmValue.nextHash).toEqual(nextHash);
+    expect(revImmValue.toString()).toEqual(imm_tcv.toString());
   });
 
   test("marshal and unmarshal HashOnlyValue", function() {
@@ -249,6 +253,7 @@ describe("Marshaling", function() {
     expect(marshaledBytes.slice(2).length).toBe((1 + 8 + 32)*2);
     expect(() => arb.unmarshal(marshaledBytes))
       .toThrow("Error unmarshaling: HashOnlyValue was not expected");
+    expect(hv.toString()).toEqual("HashOnlyValue(" + hv.hash() + ")");
   });
 
   test("marshal and unmarshal TupleValue", function() {
@@ -377,8 +382,10 @@ describe("test_cases.json", function() {
       let expectedHash = test_cases[i]["hash"];
       let value = arb.unmarshal(test_cases[i]["value"]);
       let hash = value.hash().slice(2);
+      if (hash !== expectedHash) {
+        console.log(value.toString());
+      }
       expect(hash).toEqual(expectedHash);
     });
   }
 });
-
