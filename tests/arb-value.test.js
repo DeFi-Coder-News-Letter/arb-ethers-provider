@@ -97,13 +97,13 @@ describe("Constructors", function() {
 
     // Test BasicOp hash value
     let bopv = new arb.CodePointValue(99, new arb.BasicOp(0x60), EMPTY_TUPLE_HASH);
-    let preCalc = "0x2d96ab4d5d0cc0a9514596414dafc81f7255f53688130fa90a261d7ece2a67c0";
+    let preCalc = "0xb9cffde57db229ede25012536613c9a9f9a7cde0e5f23381350737b6818852da";
     expect(bopv.hash()).toBe(preCalc);
 
     // Test ImmOp hash value
     let immop = new arb.ImmOp(0x60, new arb.IntValue(bn(0)));
     let immv = new arb.CodePointValue(100, immop, EMPTY_TUPLE_HASH);
-    let preCalc2 = "0xc3cf2ee645b0ebc6f04b2f5f855ac530cf1423d2ac29d6e95c3cce8e891e66a8";
+    let preCalc2 = "0x9b6304f1c0d7299152b70c5097dcb370ed46668b1f09146586a333f507594619";
     expect(immv.hash()).toBe(preCalc2);
 
     // Test invalid Operand type
